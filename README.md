@@ -1,6 +1,6 @@
 # FracGen: Learning How Objects Stretch and Tear with Physics-Informed Video Generation
 
-[Trong-Tung Nguyen](#), [Jiahan Zhang](#), [Anand Bhattad](#)
+[Trong-Tung Nguyen](https://nttung1110.github.io/), [Jiahan Zhang](https://scholar.google.com/citations?user=lUlcGxIAAAAJ&hl=en), [Anand Bhattad](https://anandbhattad.github.io/)<br>
 Johns Hopkins University
 
 [[Project Page](https://fracgen.github.io/)] [[arXiv](https://arxiv.org/abs/2609.38152)] [[Data & Checkpoints](https://huggingface.co/datasets/Tung11/FracGen)]
@@ -53,8 +53,7 @@ with the damage model added.
 conda create -n fracsim python=3.10 -y
 conda activate fracsim
 pip install torch==2.2.0 torchvision==0.17.0 --index-url https://download.pytorch.org/whl/cu121
-pip install -r env/fracsim_requirements.txt          # warp-lang 0.10.1, taichi 1.5.0, ...
-# CUDA extensions of gaussian-splatting (needs nvcc 12.x on PATH, e.g. `module load cuda/12.3`)
+pip install -r env/fracsim_requirements.txt
 pip install --no-build-isolation src/fracsim/gaussian-splatting/submodules/diff-gaussian-rasterization/
 pip install --no-build-isolation src/fracsim/gaussian-splatting/submodules/simple-knn/
 ```
@@ -75,8 +74,7 @@ hf download Tung11/FracGen --repo-type dataset --include "fracsim/gaussians/*" -
 ```
 ### 1.3 Running a simulation and visualizing the result
 
-Example with `rubber_toy`, pulled apart horizontally: the toy stretches, tears across the middle
-around frame 50 and both halves stay in view for the rest of the 100 frames.
+Example with `rubber_toy`.
 
 ```bash
 conda activate fracsim
@@ -114,9 +112,6 @@ hot colormap on white; add `--overlay_on_rgb` to blend them over the RGB frames.
 **Results of running simulation FracSim** (RGB | force | flow | stress | strain | damage):
 
 ![FracSim rubber toy horizontal tear](docs/assets/fracsim_rubber_toy_horizontal.gif)
-
-A 100-frame simulation with all maps takes about one minute on an H100 and writes ~180 MB.
-Per-object wrappers for all 10 objects are in `scripts/fracsim/run_<object>_phys_map.sh`.
 
 ### 1.4 Simulation config
 
@@ -218,20 +213,16 @@ denoises, and a constitutive consistency loss ties the predicted stress, strain 
 conda create -n fracgen python=3.10 -y
 conda activate fracgen
 pip install torch==2.13.0 torchvision==0.28.0 --index-url https://download.pytorch.org/whl/cu130
-pip install -e src/fracgen           # diffsynth + training/inference code (diffusers 0.36, transformers, peft, accelerate)
+pip install -e src/fracgen
 ```
-Attention falls back to PyTorch SDPA; flash-attn or SageAttention are picked up automatically if installed.
 
 ### 2.2 Models and data
 
 ```bash
 pip install -U huggingface_hub
-# base Wan2.1-Fun-1.3B-Control (DiT, VAE, T5 and CLIP encoders) and the umT5 tokenizer, ~19 GB
 hf download alibaba-pai/Wan2.1-Fun-V1.1-1.3B-Control --local-dir ckpts/wan/alibaba-pai/Wan2.1-Fun-V1.1-1.3B-Control
 hf download Wan-AI/Wan2.1-T2V-1.3B --include "google/*" --local-dir ckpts/wan/Wan-AI/Wan2.1-T2V-1.3B
-# FracGen final LoRA checkpoint (175 MB)
 hf download Tung11/FracGen --repo-type dataset --include "ckpts/*" --local-dir ckpts/fracgen/ && mv ckpts/fracgen/ckpts/* ckpts/fracgen/
-# processed training data: 10-sample subset for a quick test (27 MB)
 hf download Tung11/FracGen --repo-type dataset --include "fracgen/sample_10/*" --local-dir data/
 ```
 Each processed dataset is a folder with `metadata.csv` and one mp4 folder per modality
@@ -254,10 +245,7 @@ combined/<name>_stitched.mp4            input reference + all generated modaliti
 `benchmarks/build_demo.py` builds such inputs from a single intact image and a two-handle pull,
 and varies one control at a time. We provide examples on different controllability using FracGen.
 
-**Case 1: force direction.** The pull trajectory of the bread comes from
-`data/benchmark/demo_bread/trajectory_info.json` (two handle positions and their px/frame
-velocities). The builder renders a horizontal pull and the same pull rotated by 90 degrees for a
-vertical tear; material fixed at E=1e4, nu=0.25, lambda 2/3.
+**Case 1: force direction.** We demonstrate a controllable example where we vary force direction.
 ```bash
 conda activate fracgen
 python benchmarks/build_demo.py --image data/benchmark/demo_bread/bread_intact.png \
@@ -266,13 +254,13 @@ python benchmarks/build_demo.py --image data/benchmark/demo_bread/bread_intact.p
 CKPT=ckpts/fracgen/fracgen_stage3_step-21000.safetensors INPUT=outputs/fracgen/demo_bread OUT=outputs/fracgen/infer \
     bash scripts/fracgen/infer.sh
 ```
-Top row: the force control over the input image; bottom row: generated fracture.
-Horizontal pull | vertical pull:
+Top row shows the force control over the input image while bottom row shows the generated
+fracture with the corresponding force direction.
 
 ![force direction](docs/assets/fracgen_demo_force.gif)
 
-**Case 2: fracture timing.** Same horizontal pull (x2.5), same stiffness; only the damage thresholds
-change: `lambda_onset=2, lambda_crit=3` tears early, `lambda_onset=3.3, lambda_crit=4` tears late.
+**Case 2: Fracture Timing.** We can also control the fracture timing as well by changing
+`lambda_onset=2, lambda_crit=3` tears early, `lambda_onset=3.3, lambda_crit=4` tears late.
 ```bash
 python benchmarks/build_demo.py --image data/benchmark/demo_bread/bread_intact.png \
     --trajectory data/benchmark/demo_bread/trajectory_info.json \
@@ -316,7 +304,7 @@ its rows also carry the ground-truth maps for the benchmark metrics in Section 3
 DATASET=data/fracgen/sample_10/train CACHE=data/fracgen/cache/sample_10 GPUS=0 \
   bash scripts/fracgen/preprocess_data.sh          # ~2.5 min for 10 clips on one H100
 ```
-**Train the three stages:**
+We provide an example on training the model on three stages using mock 10 sample data:
 ```bash
 STAGE=1 CACHE=data/fracgen/cache/sample_10 EXP_ID=stage1 GPUS=0,1,2,3 bash scripts/fracgen/train.sh
 STAGE=2 CACHE=data/fracgen/cache/sample_10 EXP_ID=stage2 PRETRAIN_CKPT=ckpts/fracgen/stage1/ckpts/step-<N>.safetensors bash scripts/fracgen/train.sh
