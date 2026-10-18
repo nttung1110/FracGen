@@ -113,64 +113,7 @@ hot colormap on white; add `--overlay_on_rgb` to blend them over the RGB frames.
 
 ![FracSim rubber toy horizontal tear](docs/assets/fracsim_rubber_toy_horizontal.gif)
 
-### 1.4 Simulation config
-
-One JSON file fully specifies a simulation. The demo config above,
-`src/fracsim/configs/tear_rubber_toy_config_horizontal.json`, with the fields that matter:
-
-```jsonc
-{
-  // material
-  "material": "rubber",          // "jelly" = fixed-corotated (bread-like), "rubber" = Neo-Hookean
-  "E": 2e4, "nu": 0.49,          // Young's modulus, Poisson ratio
-  "density": 200,
-  "g": [0.0, 0.0, 0.0],
-  "rpic_damping": 0.005, "grid_v_damping_scale": 0.9998,
-  // fracture
-  "damage": {
-    "enabled": true,
-    "lambda_onset": 1.5,         // principal stretch at which damage starts
-    "lambda_crit": 5.0,          // principal stretch at which the particle is fully broken
-    "break": 0.999, "apply_full_break": true
-  },
-  // MPM grid and time
-  "n_grid": 150,                 // grid resolution
-  "substep_dt": 1e-4, "frame_dt": 1e-2, "frame_num": 100,   // substep_dt must divide frame_dt
-  // preprocessing of the Gaussians
-  "opacity_threshold": 0.02,     // drop low-opacity kernels
-  "rotation_degree": [25.0], "rotation_axis": [1],   // sequential rotations to make the object upright
-  "sim_area": [xmin, xmax, ymin, ymax, zmin, zmax],  // optional bounding box of particles to simulate
-  "scale": 0.6,                  // fit into the unit cube
-  "particle_filling": { ... },   // optional ray-cast filling of internal voids
-  // boundary conditions: the two pulling handles
-  "boundary_conditions": [
-    {"type": "bounding_box"},
-    {"type": "enforce_particle_translation",   // handle 1: particles inside this slab at t=0 move +y
-     "point": [1.1, 1.1, 1.0], "size": [1.0, 0.05, 1.0],
-     "velocity": [0.0, 0.35, 0.0], "start_time": 0.0, "end_time": 3.3},
-    {"type": "enforce_particle_translation",   // handle 2: moves -y
-     "point": [1.1, 0.9, 1.0], "size": [1.0, 0.05, 1.0],
-     "velocity": [0.0, -0.35, 0.0], "start_time": 0.0, "end_time": 3.3}
-    // other types: "cuboid", "surface_collider", "particle_impulse"
-  ],
-  // camera
-  "init_azimuthm": 55, "init_elevation": 13, "init_radius": 1.4, "move_camera": false
-}
-```
-
-What to change to get different behaviour:
-
-| want | change |
-|---|---|
-| tear earlier / later | lower / raise `lambda_onset` and `lambda_crit` |
-| stiffer or softer | `E` (bread 2e3 to 1e4, rubber 2e4 to 1e5), `nu` (bread 0.2 to 0.3, rubber 0.45 to 0.49) |
-| pull direction | rotate the two handle `point`/`velocity` vectors |
-| pull speed | handle `velocity` magnitude (too slow and the handle slab slides out without tearing the body, too fast and the halves leave the frame) |
-| stretch and snap back without tearing | stop the pull early with `end_time` 0.4 to 0.8 and keep `lambda_onset` high |
-
-Templates for all 10 objects are in `src/fracsim/configs/tear_<object>_config_exp.json`.
-
-### 1.5 Reconstruct your own object
+### 1.4 Reconstruct your own object
 
 FracSim needs a 3DGS reconstruction, which needs posed multi-view images.
 
