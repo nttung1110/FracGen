@@ -1,0 +1,17 @@
+# FracSim dependencies (tested with python 3.10, CUDA 12.1 wheels).
+# Install torch first:
+#   pip install torch==2.2.0 torchvision==0.17.0 --index-url https://download.pytorch.org/whl/cu121
+warp-lang==0.10.1
+taichi==1.5.0
+numpy==1.26.4            # torch 2.2 wheels are built against numpy 1.x
+opencv-python-headless==4.10.0.84
+plyfile==1.0.3
+h5py==3.15.1
+imageio==2.34.0
+imageio-ffmpeg==0.6.0
+matplotlib==3.7.2
+scipy==1.15.2
+tqdm==4.65.0
+pillow==10.3.0
+PyMCubes==0.1.4
+trimesh==4.0.8

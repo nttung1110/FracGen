@@ -1,0 +1,167 @@
+{
+  "image": {
+    "name": "imgs/bread_roll.jpeg",
+    "width_px": 1024,
+    "height_px": 1024
+  },
+  "units": {
+    "distance": "pixel",
+    "time": "frame"
+  },
+  "vector_display_scale_frames": 5,
+  "loading": [
+    {
+      "name": "Load 1",
+      "type": "uniaxial",
+      "mode": "tension",
+      "velocity_px_per_frame": 2,
+      "velocity_options_px_per_frame": [
+        2,
+        5,
+        8
+      ],
+      "point_A": {
+        "position_px": {
+          "x": 535,
+          "y": 214
+        },
+        "position_normalized": {
+          "x": 0.5226,
+          "y": 0.2092
+        },
+        "direction_deg": 89.4
+      },
+      "point_B": {
+        "position_px": {
+          "x": 530,
+          "y": 740
+        },
+        "position_normalized": {
+          "x": 0.5172,
+          "y": 0.7229
+        },
+        "direction_deg": 269.4
+      }
+    },
+    {
+      "name": "Load 2",
+      "type": "uniaxial",
+      "mode": "tension",
+      "velocity_px_per_frame": 2,
+      "velocity_options_px_per_frame": [
+        2,
+        5,
+        8
+      ],
+      "point_A": {
+        "position_px": {
+          "x": 420,
+          "y": 496
+        },
+        "position_normalized": {
+          "x": 0.41,
+          "y": 0.4842
+        },
+        "direction_deg": 179.5
+      },
+      "point_B": {
+        "position_px": {
+          "x": 637,
+          "y": 498
+        },
+        "position_normalized": {
+          "x": 0.6225,
+          "y": 0.4862
+        },
+        "direction_deg": 359.5
+      }
+    },
+    {
+      "name": "Load 3",
+      "type": "uniaxial",
+      "mode": "tension",
+      "velocity_px_per_frame": 2,
+      "velocity_options_px_per_frame": [
+        2,
+        5,
+        8
+      ],
+      "point_A": {
+        "position_px": {
+          "x": 631,
+          "y": 277
+        },
+        "position_normalized": {
+          "x": 0.6161,
+          "y": 0.2704
+        },
+        "direction_deg": 65.6
+      },
+      "point_B": {
+        "position_px": {
+          "x": 442,
+          "y": 692
+        },
+        "position_normalized": {
+          "x": 0.4319,
+          "y": 0.6756
+        },
+        "direction_deg": 245.6
+      }
+    },
+    {
+      "name": "Load 4",
+      "type": "uniaxial",
+      "mode": "tension",
+      "velocity_px_per_frame": 2,
+      "velocity_options_px_per_frame": [
+        2,
+        5,
+        8
+      ],
+      "point_A": {
+        "position_px": {
+          "x": 438,
+          "y": 284
+        },
+        "position_normalized": {
+          "x": 0.4275,
+          "y": 0.2772
+        },
+        "direction_deg": 113.5
+      },
+      "point_B": {
+        "position_px": {
+          "x": 616,
+          "y": 695
+        },
+        "position_normalized": {
+          "x": 0.6018,
+          "y": 0.6789
+        },
+        "direction_deg": 293.5
+      }
+    }
+  ],
+  "properties": {
+    "material": {
+      "youngs_modulus_Pa": [
+        2000,
+        6000,
+        10000
+      ],
+      "poisson_ratio": [
+        0.2,
+        0.25,
+        0.3
+      ]
+    },
+    "fracture": [
+      {
+        "lambda_onset": 2,
+        "lambda_crit": 3,
+        "category": "bread-like"
+      }
+    ]
+  }
+}

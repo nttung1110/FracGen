@@ -1,0 +1,29 @@
+{
+  "source": "output_bread_and_rubber_only/control_video/bread_config_0234_force.mp4",
+  "speed_scale": 2.5,
+  "sigma_px": 6.0,
+  "n_frames": 100,
+  "fps": 25,
+  "blobs": [
+    {
+      "x0": 336.1724807350621,
+      "y0": 249.30667525631338,
+      "vx": 0.6045526896565199,
+      "vy": -0.0442493327878371,
+      "speed_px_per_frame": 0.6061699085430595,
+      "direction_deg_math": 4.186214221099089,
+      "max_fit_residual_px": 0.4877816128249766,
+      "n_frames": 100
+    },
+    {
+      "x0": 168.67182973736493,
+      "y0": 261.5934910664781,
+      "vx": -0.7446211285699381,
+      "vy": 0.05459598636332147,
+      "speed_px_per_frame": 0.746619948059086,
+      "direction_deg_math": -175.80654911796157,
+      "max_fit_residual_px": 0.5195792891804828,
+      "n_frames": 100
+    }
+  ]
+}

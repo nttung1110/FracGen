@@ -1,0 +1,39 @@
+# working notes (not part of the release)
+claude/
+
+# data, checkpoints, outputs (downloaded or generated)
+data/*
+!data/README.md
+!data/benchmark/
+ckpts/*
+!ckpts/README.md
+outputs/
+log/
+logs/
+wandb/
+
+# media and large binaries
+*.mp4
+*.npz
+*.npy
+*.ply
+*.h5
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+*.zip
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
