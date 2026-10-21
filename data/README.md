@@ -10,7 +10,7 @@ data/
 │   └── sim_output/<run>/        FracSim outputs (RGB frames + physics maps per run)
 ├── fracgen/
 │   └── <split>/                 processed training data: metadata.csv + mp4 folders (download)
-└── benchmark/                   benchmark inputs (images + annotations, committed)
+└── benchmark/                   benchmark inputs (images + annotations)
 ```
 
 ## Download
