@@ -1,7 +1,6 @@
 # data/
 
-Everything in this folder except `benchmark/` is downloaded or generated and is git-ignored.
-
+Struccture of data being downloaded for FracGen which includes data for fracsim and data for fracgen
 ```
 data/
 ├── fracsim/
