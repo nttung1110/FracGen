@@ -62,7 +62,7 @@ pip install --no-build-isolation src/fracsim/gaussian-splatting/submodules/simpl
 We provide 10 objects reconstructed with 3DGS and apply FracSim to each of them to obtain
 stretching and tearing data, which is then fed to FracGen for training.
 
-| Bread-like (progressive tearing) | Rubber-like (elastic stretch, snap) |
+| Bread-like (progressive tearing) | Rubber-like (elastic stretch) |
 |---|---|
 | `bread`, `bread_roll`, `cake`, `croissant`, `muffin` | `rubber_toy`, `rubber1`, `rubber2`, `rubber3`, `rubber4` |
 
